@@ -46,7 +46,7 @@ public Plugin myinfo =
 	name = "SM Fortnite Emotes Extended",
 	author = "Kodua, Franc1sco franug, TheBO$$",
 	description = "This plugin is for demonstration of some animations from Fortnite in CS:GO",
-	version = "1.2.3",
+	version = "1.2.4",
 	url = "https://github.com/Franc1sco/Fortnite-Emotes-Extended"
 };
 
@@ -591,8 +591,12 @@ void StopEmote(int client)
 	int iEmoteEnt = EntRefToEntIndex(g_iEmoteEnt[client]);
 	if (iEmoteEnt && iEmoteEnt != INVALID_ENT_REFERENCE && IsValidEntity(iEmoteEnt))
 	{
-		AcceptEntityInput(client, "ClearParent", client, client, 0);
-		AcceptEntityInput(iEmoteEnt, "Kill");
+		char emoteEntName[50];
+		GetEntPropString(iEmoteEnt, Prop_Data, "m_iName", emoteEntName, sizeof(emoteEntName));
+		SetVariantString(emoteEntName);
+		AcceptEntityInput(client, "ClearParent", iEmoteEnt, iEmoteEnt, 0);
+		DispatchKeyValue(iEmoteEnt, "OnUser1", "!self,Kill,,1.0,-1");
+		AcceptEntityInput(iEmoteEnt, "FireUser1");
 		
 		ResetCam(client);
 		WeaponUnblock(client);
@@ -630,8 +634,12 @@ void TerminateEmote(int client)
 	int iEmoteEnt = EntRefToEntIndex(g_iEmoteEnt[client]);
 	if (iEmoteEnt && iEmoteEnt != INVALID_ENT_REFERENCE && IsValidEntity(iEmoteEnt))
 	{
-		AcceptEntityInput(client, "ClearParent", client, client, 0);
-		AcceptEntityInput(iEmoteEnt, "Kill");
+		char emoteEntName[50];
+		GetEntPropString(iEmoteEnt, Prop_Data, "m_iName", emoteEntName, sizeof(emoteEntName));
+		SetVariantString(emoteEntName);
+		AcceptEntityInput(client, "ClearParent", iEmoteEnt, iEmoteEnt, 0);
+		DispatchKeyValue(iEmoteEnt, "OnUser1", "!self,Kill,,1.0,-1");
+		AcceptEntityInput(iEmoteEnt, "FireUser1");
 
 		g_iEmoteEnt[client] = 0;
 		g_bClientDancing[client] = false;
